@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ClientRadioSample</string>
+
+    <string name="notify_lastest_channel_info">notifyRadioLatestChannelInfo</string>
+    <string name="notify_radio_scan_info">notifyRadioScanInfo</string>
+    <string name="notify_radio_preset_info">notifyRadioPresetInfo</string>
+    <string name="notify_radio_av_status_info">notifyRadioAvStatusInfo</string>
+</resources>
