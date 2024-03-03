@@ -1,6 +1,6 @@
-package ai.umos.ambientai.feature.navi42.provider
+package com.mobis.cp.client.provider
 
-import ai.umos.ambientai.feature.navi42.model.Navi42SocData
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
@@ -8,18 +8,21 @@ import android.net.Uri
 import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class Navi42Provider @Inject constructor(
+@Singleton
+class AiAssistantProvider @Inject constructor(
     @ApplicationContext context: Context
 ) {
-    private val tag = "[AmbientAi] Navi42Provider"
+    private val tag = "[AmbientAi] AiAssistantProvider"
     private val contentResolver: ContentResolver = context.contentResolver
 
-    fun getSettingsSocData(): Navi42SocData {
-        Log.d(tag, "getSettingsSocData")
+    @SuppressLint("Range")
+    fun getAgentStatus(): String {
+        Log.d(tag, "getAgentStatus")
         var cursor: Cursor? = null
-        var navi42SocData = Navi42SocData()
+        var status = ""
 
         try {
             cursor = contentResolver.query(
@@ -33,31 +36,20 @@ class Navi42Provider @Inject constructor(
             cursor?.let {
                 cursor.moveToFirst()
                 while (!cursor.isAfterLast) {
-                    val batterySizeIndex = cursor.getColumnIndex("batterySize")
-                    val batteryLevelIndex = cursor.getColumnIndex("batteryLevel")
-                    val motorEfficiencyIndex = cursor.getColumnIndex("motorEfficiency")
-                    val drivingRangeIndex = cursor.getColumnIndex("drivingRange")
-
-                    val batterySize = cursor.getDouble(batterySizeIndex)
-                    val batteryLevel = cursor.getDouble(batteryLevelIndex)
-                    val motorEfficiency = cursor.getDouble(motorEfficiencyIndex)
-                    val drivingRange = cursor.getDouble(drivingRangeIndex)
-                    Log.v(tag, "[getSettingsSocData] batterySize[$batterySize] batteryLevel[$batteryLevel] motorEfficiency[$motorEfficiency] drivingRange[$drivingRange]")
-                    navi42SocData = Navi42SocData(batterySize, batteryLevel, motorEfficiency, drivingRange)
+                    status = it.getString(it.getColumnIndex("status"))
                     cursor.moveToNext()
                 }
             }
         } catch (e: Exception) {
-            Log.e(tag, "fetchRadioPreset e:$e")
+            Log.e(tag, "getAgentStatus e:$e")
         }
         cursor?.close()
-        return navi42SocData
+        return status
     }
 
     companion object {
-        private const val TABLE_NAME = "Battery"
-        private const val AUTHORITY = "ai.umos.maps.android.navigation.app"
-        private const val URI_STRING = "content://$AUTHORITY/$TABLE_NAME"
-        val CONTENT_URI: Uri = Uri.parse(URI_STRING)
+        private const val AUTHORITY = "ai.umos.aiassistant.provider"
+        private const val BASE_PATH = "status"
+        val CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY/$BASE_PATH")
     }
 }

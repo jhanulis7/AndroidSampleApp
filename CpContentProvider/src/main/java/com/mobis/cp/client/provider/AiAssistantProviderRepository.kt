@@ -1,4 +1,11 @@
 package com.mobis.cp.client.provider
 
-class AiAssistantProviderRepository {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class AiAssistantProviderRepository @Inject constructor(
+    private val aiAssistantProvider: AiAssistantProvider
+) {
+    fun getAgentStatus() = aiAssistantProvider.getAgentStatus()
 }

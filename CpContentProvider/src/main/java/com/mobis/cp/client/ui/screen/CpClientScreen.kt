@@ -20,7 +20,7 @@ fun CpClientScreen(
     uiState: UiState,
     name: String,
     modifier: Modifier = Modifier,
-    onButton: (Int, Int, String) -> Unit
+    onButton: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -32,7 +32,7 @@ fun CpClientScreen(
         )
         Spacer(modifier = Modifier.padding(top = 100.dp))
         Button(onClick = {
-            onButton.invoke(MsgCommand.MSG_REQ_VR_STATUS.command, 100, "Hello MOBIS!")
+            onButton.invoke()
         }) {
             Text(text = "GET VR Status")
         }
