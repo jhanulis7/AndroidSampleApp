@@ -43,5 +43,11 @@ class CpMainActivity : ComponentActivity() {
                 }
             }
         }
+        viewModel.initialize()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.release()
     }
 }
