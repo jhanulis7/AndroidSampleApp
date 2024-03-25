@@ -11,9 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobis.cp.client.constant.MsgCommand
 import com.mobis.cp.client.model.UiState
-import com.mobis.cp.client.vm.CpViewModel
 
 @Composable
 fun CpClientScreen(
