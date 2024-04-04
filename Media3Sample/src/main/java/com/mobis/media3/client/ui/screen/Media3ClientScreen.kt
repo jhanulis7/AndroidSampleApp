@@ -28,7 +28,8 @@ fun Media3ClientScreen(
     uiState: Media3UiState,
     name: String,
     modifier: Modifier = Modifier,
-    onButton: () -> Unit
+    onPlayButton: () -> Unit,
+    onPauseButton: () -> Unit
 ) {
 
     Column(
@@ -41,20 +42,15 @@ fun Media3ClientScreen(
         )
         Spacer(modifier = Modifier.padding(top = 100.dp))
         Button(onClick = {
-            onButton.invoke()
+            onPlayButton.invoke()
         }) {
-            Text(text = "GET VR Status")
+            Text(text = "Play")
         }
         Spacer(modifier = Modifier.padding(top = 30.dp))
-        Row {
-            Text(
-                text = "Agent Status: ",
-                fontSize = 40.sp,
-            )
-            Text(
-                text = uiState.agentStatus,
-                fontSize = 40.sp,
-            )
+        Button(onClick = {
+            onPauseButton.invoke()
+        }) {
+            Text(text = "Pause")
         }
     }
 }

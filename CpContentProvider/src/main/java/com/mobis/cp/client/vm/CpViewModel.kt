@@ -30,7 +30,8 @@ class CpViewModel @Inject constructor(
             super.onChange(selfChange, uri)
             uri?.let {
                 Log.d(tag, "uri:$it contentObserver changed selfChange:$selfChange ")
-                queryAgentStatus()
+                //queryAgentStatus()
+                getAgentStatus()
             }
         }
     }
@@ -60,6 +61,12 @@ class CpViewModel @Inject constructor(
     fun queryAgentStatus() {
         val status = repositoryProvider.getAgentStatus()
         Log.d(tag, "queryAgentStatus() status: $status")
+        uiState = uiState.copy(agentStatus = status)
+    }
+
+    fun getAgentStatus() {
+        val status = repositoryProvider.callAgentStatus()
+        Log.d(tag, "callAgentStatus() status: $status")
         uiState = uiState.copy(agentStatus = status)
     }
 }

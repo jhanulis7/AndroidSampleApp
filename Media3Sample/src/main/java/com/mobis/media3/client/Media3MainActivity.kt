@@ -41,16 +41,22 @@ class Media3MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    val onButton: () -> Unit = {
+                    val onPlayButton: () -> Unit = {
                         //viewModel.queryAgentStatus()
                         //mediaController.play()
                         controller?.play()
                     }
+                    val onPauseButton: () -> Unit = {
+                        //viewModel.queryAgentStatus()
+                        //mediaController.play()
+                        controller?.pause()
+                    }
                     Media3ClientScreen(
                         uiState = viewModel.uiState,
-                        name = "Client Sample for AI Assistant",
+                        name = "Client Media3 for AI Assistant",
                         modifier = Modifier.fillMaxWidth(),
-                        onButton = onButton,
+                        onPlayButton = onPlayButton,
+                        onPauseButton = onPauseButton
                     )
                 }
             }

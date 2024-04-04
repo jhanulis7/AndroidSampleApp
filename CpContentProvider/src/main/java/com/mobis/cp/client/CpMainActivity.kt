@@ -32,7 +32,8 @@ class CpMainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background,
                 ) {
                     val onButton: () -> Unit = {
-                        viewModel.queryAgentStatus()
+                        //viewModel.queryAgentStatus()
+                        viewModel.getAgentStatus()
                     }
                     CpClientScreen(
                         uiState = viewModel.uiState,

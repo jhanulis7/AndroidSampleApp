@@ -6,6 +6,9 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+import com.mobis.cp.client.model.AiAssistantStatus
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -44,6 +47,35 @@ class AiAssistantProvider @Inject constructor(
             Log.e(tag, "getAgentStatus e:$e")
         }
         cursor?.close()
+        return status
+    }
+
+    @SuppressLint("Range")
+    fun callAgentStatus(): String {
+        var status = ""
+
+        val method = contentResolver.getType(CONTENT_URI)
+        Log.d(tag, "callAgentStatus : method:$method")
+        method?.let {
+            val bundle = contentResolver.call(CONTENT_URI, "getAgentStatus", null, null)
+            bundle?.let {
+                try {
+                    val resultData = it.getString("result")
+                    Log.d(tag, "callAgentStatus : resultData:$resultData")
+                    if (!resultData.isNullOrEmpty()) {
+                        val element = JsonParser.parseString(resultData)
+                        val data = Gson().fromJson(element, AiAssistantStatus::class.java)
+                        Log.d(tag, "callAgentStatus: $data")
+                        status = data.status
+                    } else {
+                        status = ""
+                    }
+                } catch (e: Exception) {
+                    status = "Error"
+                    Log.e(tag, "${e.printStackTrace()}")
+                }
+            }
+        }
         return status
     }
 

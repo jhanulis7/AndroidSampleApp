@@ -8,4 +8,5 @@ class AiAssistantProviderRepository @Inject constructor(
     private val aiAssistantProvider: AiAssistantProvider
 ) {
     fun getAgentStatus() = aiAssistantProvider.getAgentStatus()
+    fun callAgentStatus() = aiAssistantProvider.callAgentStatus()
 }
